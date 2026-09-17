@@ -15,7 +15,8 @@ enabled. The **Web** column covers React Native for Web (via
 [`react-native-web`](https://necolas.github.io/react-native-web/)) and applies
 only to `EnrichedMarkdownText` - the editor is currently native-only. For the syntax
 itself see [Core concepts](/introduction/core-concepts); for per-element detail
-and style properties see each platform's **Element structure** reference.
+and style properties see each platform's **Element structure** reference. For
+what is missing and what is being worked on, see the [Roadmap](/misc/roadmap).
 
 ## EnrichedMarkdownText
 
