@@ -42,7 +42,7 @@ Available by default, no configuration required.
 
 ### GitHub Flavored Markdown
 
-Enabled with `flavor="github"` on native. See [Markdown flavors](/rich-text-formatting/markdown-flavors).
+Enabled with `flavor="github"` on native. See [Markdown flavors](/react-native/guides/markdown-flavors).
 
 :::note
 The web renderer has no `flavor` prop - tables, task lists, strikethrough and

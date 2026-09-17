@@ -42,10 +42,11 @@ react-native/         (40)  basics/ (10)        installation, your-first-project
                             api-reference/ (20) enriched-markdown-text,
                                                 enriched-markdown-text-input,
                                                 style-properties, element-structure
-                            guides/ (30)        image-caching, native-assets,
-                                                testing, web-support
+                            guides/ (30)        markdown-flavors, image-caching,
+                                                native-assets, testing,
+                                                web-support
 rich-text-formatting/ (50)  code-highlighting, editor-style-text, latex-math,
-                            markdown-flavors, markdown-streaming, mentions
+                            markdown-streaming, mentions
 misc/                 (60)  compatibility.mdx, macos, rtl, accessibility,
                             copy-options, breaking-changes
 ```
