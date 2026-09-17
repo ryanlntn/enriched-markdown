@@ -199,6 +199,15 @@ class TableSegmentTest {
   }
 
   @Test
+  fun serializeTableEmitsDelimiterRowForHeaderOnlyTable() {
+    val node = table(head = tableHead(tableRow(tableHeaderCell("left", text("A")), tableHeaderCell("default", text("B")))))
+
+    val markdown = MarkdownASTSerializer.serializeTable(node)
+
+    assertEquals("| A | B |\n| :--- | --- |\n", markdown)
+  }
+
+  @Test
   fun serializeTableEscapesLiteralPipesInCells() {
     val node =
       table(

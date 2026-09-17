@@ -12,7 +12,6 @@ object MarkdownASTSerializer {
    */
   fun serializeTable(node: MarkdownASTNode): String =
     buildString {
-      var headerDone = false
       node.children.forEach { section ->
         section.children.filter { it.type == NodeType.TableRow }.forEach { row ->
           append("| ")
@@ -20,11 +19,11 @@ object MarkdownASTSerializer {
           append(row.children.joinToString(" | ") { serializeChildren(it).replace("|", "\\|") })
           append(" |\n")
 
-          if (!headerDone && row.children.firstOrNull()?.type == NodeType.TableHeaderCell) {
+          // md4c always emits exactly one head row (guarded by ParserTest).
+          if (section.type == NodeType.TableHead) {
             append("| ")
             append(row.children.joinToString(" | ") { alignmentMarker(it.getAttribute("align")) })
             append(" |\n")
-            headerDone = true
           }
         }
       }
