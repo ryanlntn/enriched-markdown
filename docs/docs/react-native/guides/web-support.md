@@ -100,9 +100,10 @@ and compiles once, on the first render.
 ### Math (KaTeX)
 
 LaTeX math (`md4cFlags.latexMath`, on by default) renders with
-[KaTeX](https://katex.org/), an **optional** peer dependency. To show math on
-web, install it and import its stylesheet once (for example in your web entry
-file):
+[KaTeX](https://katex.org/) in **MathML output mode**, which browsers render
+natively - no CSS or font files required. KaTeX is an **optional** peer
+dependency, loaded lazily the first time a math node is encountered, so it has
+no cost on pages without math. Install it to enable web math:
 
 <Tabs groupId="package-managers">
   <TabItem value="npm" label="npm">
@@ -128,12 +129,20 @@ pnpm add katex
   </TabItem>
 </Tabs>
 
-```tsx
-import 'katex/dist/katex.min.css';
-```
-
 If `katex` is not installed, the library skips math rendering and falls back to
-the raw `$...$` / `$$...$$` source text - everything else keeps working.
+the raw `$...$` / `$$...$$` source text - everything else keeps working. Setting
+`md4cFlags={{ latexMath: false }}` stops math parsing altogether, so KaTeX is
+never loaded.
+
+:::note
+MathML is supported natively in Chrome 109+, Firefox, and Safari; older browsers
+show the raw LaTeX source as a text fallback. Unlike some KaTeX setups, no
+stylesheet or `<link>` tag is needed - import `katex/dist/katex.min.css` once in
+your web entry only if you want KaTeX's own fonts applied to the MathML output.
+:::
+
+See [LaTeX math](/rich-text-formatting/latex-math) for the authoring syntax and
+the `markdownStyle.math` / `inlineMath` options.
 
 ### Render
 

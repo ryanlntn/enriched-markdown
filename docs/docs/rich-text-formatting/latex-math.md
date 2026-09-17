@@ -32,20 +32,6 @@ Block equations render as standalone display elements with their own spacing and
 LaTeX commands use backslashes (`\frac`, `\alpha`). In regular JS strings and template literals a backslash is an escape character, so use `String.raw` (as above) or double every backslash (`\\frac`). Block math (`$$...$$`) must be on its own line to render as a display element.
 :::
 
-## Web
-
-On web the library renders LaTeX with [KaTeX](https://katex.org/) in **MathML output mode**, which browsers render natively - no CSS or font files required. KaTeX is an **optional peer dependency**, loaded lazily the first time a math node is encountered, so it has no cost on pages without math. Install it to enable web math:
-
-<CodeTabs groupId="package-managers">
-<Tab label="npm">npm install katex</Tab>
-<Tab label="yarn">yarn add katex</Tab>
-<Tab label="pnpm">pnpm add katex</Tab>
-</CodeTabs>
-
-:::note
-MathML is supported natively in Chrome 109+, Firefox, and Safari; older browsers show the raw LaTeX source as a text fallback. If `katex` is not installed, math rendering is skipped and the raw `$...$` / `$$...$$` source is shown. Unlike some KaTeX setups, no stylesheet or `<link>` tag is needed.
-:::
-
 ## Reducing app size
 
 Native LaTeX rendering relies on [RaTeX](https://ratex.lites.dev/), a KaTeX-compatible math engine bundled by default on iOS and Android. If you don't need math, you can stop parsing it or exclude the native engine entirely to shrink your binary. The exact configuration is platform-specific - see the [Reference](#reference).
@@ -61,7 +47,8 @@ LaTeX math is not yet enabled on macOS.
 
 - [`md4cFlags.latexMath`](/react-native/api-reference/enriched-markdown-text#latexmath) - toggle math parsing (on by default).
 - [`markdownStyle.math`](/react-native/api-reference/style-properties#math-block-specific) and [`inlineMath`](/react-native/api-reference/style-properties#inline-math-specific) - display and inline equation styling.
-- **Reduce app size** - set `md4cFlags={{ latexMath: false }}` to stop parsing (also skips KaTeX on web), or `"enableMath": false` in the `enriched-markdown` block of your `package.json` to exclude RaTeX from the native build. See [Native assets](/react-native/guides/native-assets#reducing-binary-size) for the full opt-out.
+- **Reduce app size** - set `md4cFlags={{ latexMath: false }}` to stop parsing, or `"enableMath": false` in the `enriched-markdown` block of your `package.json` to exclude RaTeX from the native build. See [Native assets](/react-native/guides/native-assets#reducing-binary-size) for the full opt-out.
+- **Web** - math renders through KaTeX, an optional peer dependency. See [Web support](/react-native/guides/web-support#math-katex).
 
 </Tab>
 <Tab label="iOS"><ComingSoon platform="iOS" /></Tab>

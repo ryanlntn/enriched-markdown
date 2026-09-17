@@ -1,6 +1,6 @@
 ---
 sidebar_label: macOS support
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 # macOS support
