@@ -48,7 +48,7 @@ MathML is supported natively in Chrome 109+, Firefox, and Safari; older browsers
 
 ## Reducing app size
 
-Native LaTeX rendering relies on RaTeX, a KaTeX-compatible math engine bundled by default on iOS and Android. If you don't need math, you can stop parsing it or exclude the native engine entirely to shrink your binary. The exact configuration is platform-specific - see the [Reference](#reference).
+Native LaTeX rendering relies on [RaTeX](https://ratex.lites.dev/), a KaTeX-compatible math engine bundled by default on iOS and Android. If you don't need math, you can stop parsing it or exclude the native engine entirely to shrink your binary. The exact configuration is platform-specific - see the [Reference](#reference).
 
 :::note
 LaTeX math is not yet enabled on macOS.
