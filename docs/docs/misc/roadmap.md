@@ -1,13 +1,14 @@
 ---
 sidebar_label: Roadmap
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # Roadmap
 
 Where each package stands today and what is being worked on next. For what
-already ships, see [Feature support](/introduction/supported-features) - this
-page covers the gaps.
+already ships, see [Feature support](/introduction/supported-features), and for
+the rough edges in what ships, [Known limitations](/misc/known-limitations) -
+this page covers the gaps.
 
 :::note
 This is a snapshot, not a release plan: nothing here has a date, and the order
