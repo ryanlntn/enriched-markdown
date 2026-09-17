@@ -1,6 +1,6 @@
 ---
 sidebar_label: Known limitations
-sidebar_position: 6
+sidebar_position: 3
 ---
 
 # Known limitations
@@ -89,7 +89,7 @@ Covers `react-native-enriched-markdown`, including its web and macOS targets.
   spanning the full line. Visual only - it does not affect what is announced.
 
 Details and the full announcement model are in
-[Accessibility](/misc/accessibility#known-limitations).
+[Accessibility](/user-experience/accessibility#known-limitations).
 
 ### Copy and clipboard
 
@@ -97,10 +97,10 @@ Details and the full announcement model are in
   representation gets a single `dir` attribute read from the first paragraph, so
   a mixed-direction document may not paste with the per-paragraph layout you see
   in-app. Plain text and Markdown round-trip cleanly - see the
-  [copy-as-HTML caveat](/misc/rtl#copy-as-html-caveat).
+  [copy-as-HTML caveat](/user-experience/rtl#copy-as-html-caveat).
 - **The system Copy item cannot be hidden**, only relabeled, through
   [`selectionMenuConfig`](/react-native/api-reference/enriched-markdown-text#selectionmenuconfig).
-- **`onCopyPress` does not fire for [Copy as Markdown](/misc/copy-options#copy-as-markdown).**
+- **`onCopyPress` does not fire for [Copy as Markdown](/user-experience/copy-options#copy-as-markdown).**
   It covers code copied from a fenced block - the header copy button, the
   context-menu **Copy** action, and the VoiceOver copy action.
 
@@ -173,7 +173,7 @@ rendering features and API surface.
 - **Block image sizing is limited** to height and corner radius - `maxHeight`,
   `aspectRatio`, and `resizeMode` have no equivalent yet.
 - **Writing direction is not resolved per paragraph.** The first-strong
-  resolution described in [RTL support](/misc/rtl) has not reached the native
+  resolution described in [RTL support](/user-experience/rtl) has not reached the native
   package, so paragraph direction follows the app's UI layout direction.
 - **No container styling.** The API exposes per-element margins and a wrapping
   view, with no equivalent of `containerStyle`.
@@ -208,7 +208,7 @@ up.
   the `compose` wrapper.
 - **Smart copy is partial.** The plain-text and HTML clipboard write works; the
   dedicated *Copy as Markdown* and *Copy image URL* actions are not exposed by
-  the Compose API. See [Copy options](/misc/copy-options).
+  the Compose API. See [Copy options](/user-experience/copy-options).
 - **Accessibility labels are hardcoded.** List and heading labels are in place,
   but there is no localization prop - table, math, and blockquote labels follow
   the renderers above.

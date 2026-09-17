@@ -343,7 +343,7 @@ Android's `EditText` resolves direction per paragraph via the platform Bidi heur
 - `'ltr'` / `'rtl'`: force the base direction on every paragraph.
 
 :::note
-The **placeholder** follows the host view's layout direction, not this prop. For an RTL placeholder, wrap the input in `<View style={{ direction: 'rtl' }}>` or set `I18nManager.forceRTL(true)`. See [RTL support](/misc/rtl) for the full behavior.
+The **placeholder** follows the host view's layout direction, not this prop. For an RTL placeholder, wrap the input in `<View style={{ direction: 'rtl' }}>` or set `I18nManager.forceRTL(true)`. See [RTL support](/user-experience/rtl) for the full behavior.
 :::
 
 <LivePreview src={WritingDirectionSrc} unavailable unavailableLabel="Coming soon" unavailableReason={soon} />
@@ -666,4 +666,4 @@ Replaces the active mention token with a formatted link, serialized as `[display
 - [EnrichedMarkdownText](/react-native/api-reference/enriched-markdown-text) - the read-only renderer that pairs with this input.
 - [Style properties](/react-native/api-reference/style-properties) - all styleable properties, including a dark-mode recipe.
 - [Testing with Jest](/react-native/guides/testing) - the shipped Jest mock for asserting on input, ref methods, and emitted Markdown.
-- [RTL support](/misc/rtl) - right-to-left languages and per-element RTL behavior.
+- [RTL support](/user-experience/rtl) - right-to-left languages and per-element RTL behavior.

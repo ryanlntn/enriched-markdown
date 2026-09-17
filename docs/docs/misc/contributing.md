@@ -1,6 +1,6 @@
 ---
 sidebar_label: Contributing
-sidebar_position: 2
+sidebar_position: 5
 ---
 
 # Contributing

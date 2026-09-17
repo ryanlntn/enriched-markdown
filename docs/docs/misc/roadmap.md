@@ -1,6 +1,6 @@
 ---
 sidebar_label: Roadmap
-sidebar_position: 7
+sidebar_position: 4
 ---
 
 # Roadmap
@@ -31,8 +31,8 @@ features. The [web build](/react-native/guides/web-support) covers
 | Extended Markdown (underline, superscript, subscript, highlight, spoiler) | Yes | No spoiler | Yes | Spoiler in progress, highlight planned |
 | [LaTeX math](/rich-text-formatting/latex-math) | Yes | Yes | Yes | In progress |
 | [Markdown streaming](/rich-text-formatting/markdown-streaming) | Yes | Planned | Planned | Planned |
-| [Smart copy](/misc/copy-options) (Markdown, HTML, RTF, RTFD) | Yes | Planned | Yes | Partial |
-| [Accessibility](/misc/accessibility) & [RTL](/misc/rtl) | Yes | Yes | Yes | Partial |
+| [Smart copy](/user-experience/copy-options) (Markdown, HTML, RTF, RTFD) | Yes | Planned | Yes | Partial |
+| [Accessibility](/user-experience/accessibility) & [RTL](/user-experience/rtl) | Yes | Yes | Yes | Partial |
 | `EnrichedMarkdownTextInput` (editor) | Yes | Planned | Planned | Planned |
 
 Where the table says **Partial** on Android:
@@ -60,7 +60,7 @@ renderer, so each of these is close.
 - **Block image sizing** - `maxHeight`, `aspectRatio`, and `resizeMode`. Both
   native packages currently size images through height and corner radius only.
 - **Per-paragraph writing direction** - the first-strong resolution described in
-  [RTL support](/misc/rtl), brought to the iOS package.
+  [RTL support](/user-experience/rtl), brought to the iOS package.
 
 ### Shared core
 
@@ -104,7 +104,7 @@ localization, and the text break strategy.
 
 The [web build](/react-native/guides/web-support) ships the renderer.
 Still to come: the editor, [streaming](/rich-text-formatting/markdown-streaming),
-[smart copy](/misc/copy-options), and spoilers.
+[smart copy](/user-experience/copy-options), and spoilers.
 
 ### The editor on native
 
