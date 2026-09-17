@@ -112,7 +112,7 @@ The example above shows the two patterns you will use everywhere:
 `EnrichedMarkdownTextInput` accepts every prop below. It also forwards the standard React Native [`View`](https://reactnative.dev/docs/view#props) props - such as `testID`, `onLayout`, `pointerEvents`, and the `accessibility*` props - to the underlying native view.
 
 :::note
-Props marked with a <IosBadge /> or <AndroidBadge /> badge only take effect on that platform. Unlike [`EnrichedMarkdownText`](/react-native/api-reference/enriched-markdown-text), the editable input is **not yet available on web**, so each example shows its source now; a runnable live preview will follow once web support lands.
+Props marked with a <IosBadge /> or <AndroidBadge /> badge only take effect on that platform - they are flagged with a matching colored dot in the table of contents. Unlike [`EnrichedMarkdownText`](/react-native/api-reference/enriched-markdown-text), the editable input is **not yet available on web**, so each example shows its source now; a runnable live preview will follow once web support lands.
 :::
 
 ### `defaultValue`

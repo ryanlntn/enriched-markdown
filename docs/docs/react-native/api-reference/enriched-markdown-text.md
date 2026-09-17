@@ -70,7 +70,7 @@ export default function App() {
 `EnrichedMarkdownText` accepts every prop below. It also forwards the standard React Native [`View`](https://reactnative.dev/docs/view#props) props - such as `testID`, `onLayout`, `pointerEvents`, `hitSlop`, and the `accessibility*` props - to the underlying native view. The one exception is `style`: use [`containerStyle`](#containerstyle) instead. It maps to the wrapper view's `style`, and is renamed so it is not mistaken for styling the Markdown text - that is [`markdownStyle`](#markdownstyle).
 
 :::note
-Each prop has a live playground below - edit the code and try it. Props marked with a <IosBadge />, <AndroidBadge />, or <WebBadge /> badge only take effect on that platform.
+Each prop has a live playground below - edit the code and try it. Props marked with a <IosBadge />, <AndroidBadge />, or <WebBadge /> badge only take effect on that platform - they are flagged with a matching colored dot in the table of contents.
 :::
 
 ### `markdown`
