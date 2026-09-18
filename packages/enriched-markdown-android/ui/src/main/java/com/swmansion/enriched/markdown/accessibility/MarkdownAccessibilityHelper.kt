@@ -176,8 +176,9 @@ class MarkdownAccessibilityHelper(
     addAdmonitionHeaderItems(result, spanned, endLimit)
 
     if (result.isEmpty()) {
-      val visibleText = text.substring(0, endLimit)
-      return listOf(AccessibilityItem(0, visibleText.trim(), 0, endLimit))
+      val visibleText = text.substring(0, endLimit).trim()
+      if (visibleText.isEmpty()) return emptyList()
+      return listOf(AccessibilityItem(0, visibleText, 0, endLimit))
     }
 
     // Admonition headers are appended out of order and share the offsets of the character they are

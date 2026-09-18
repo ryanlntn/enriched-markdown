@@ -168,8 +168,8 @@ class MarkdownAccessibilityHelper(
     }
 
     return result.ifEmpty {
-      val visibleText = text.substring(0, endLimit)
-      listOf(AccessibilityItem(0, visibleText.trim(), 0, endLimit))
+      val visibleText = text.substring(0, endLimit).trim()
+      if (visibleText.isEmpty()) emptyList() else listOf(AccessibilityItem(0, visibleText, 0, endLimit))
     }
   }
 
