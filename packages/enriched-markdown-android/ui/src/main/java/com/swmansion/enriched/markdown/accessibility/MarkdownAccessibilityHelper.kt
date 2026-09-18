@@ -145,18 +145,22 @@ class MarkdownAccessibilityHelper(
     if (spanned.isEmpty()) return emptyList()
 
     val text = spanned.toString()
+    val endLimit = visibleTextLength(text.length)
     val result = mutableListOf<AccessibilityItem>()
     var nextId = 0
     val semanticSpans = collectSemanticSpans(spanned)
 
     var paraStart = 0
-    while (paraStart < text.length) {
+    while (paraStart < endLimit) {
       val newlineIdx = text.indexOf('\n', paraStart)
-      val paraEnd = if (newlineIdx == -1) text.length else newlineIdx + 1
+      val paraEnd = minOf(if (newlineIdx == -1) text.length else newlineIdx + 1, endLimit)
       val trimmed = text.substring(paraStart, paraEnd).trim()
 
       if (trimmed.isNotEmpty()) {
-        val spansInParagraph = semanticSpans.filter { it.start < paraEnd && it.end > paraStart }
+        val spansInParagraph =
+          semanticSpans
+            .filter { it.start < paraEnd && it.end > paraStart }
+            .map { it.copy(end = minOf(it.end, endLimit)) }
 
         if (spansInParagraph.isEmpty()) {
           result.add(
@@ -169,9 +173,12 @@ class MarkdownAccessibilityHelper(
       paraStart = paraEnd
     }
 
-    addAdmonitionHeaderItems(result, spanned)
+    addAdmonitionHeaderItems(result, spanned, endLimit)
 
-    if (result.isEmpty()) return listOf(AccessibilityItem(0, text.trim(), 0, spanned.length))
+    if (result.isEmpty()) {
+      val visibleText = text.substring(0, endLimit)
+      return listOf(AccessibilityItem(0, visibleText.trim(), 0, endLimit))
+    }
 
     // Admonition headers are appended out of order and share the offsets of the character they are
     // anchored to, so the list is re-sorted into reading order and the ids renumbered — `id`
@@ -179,6 +186,13 @@ class MarkdownAccessibilityHelper(
     return result
       .sortedBy { it.start }
       .mapIndexed { index, item -> item.copy(id = index) }
+  }
+
+  /** End offset of the laid-out (visible) text; less than the full length when truncated. */
+  private fun visibleTextLength(fullLength: Int): Int {
+    val layout = textView.layout ?: return fullLength
+    if (layout.lineCount == 0) return fullLength
+    return minOf(fullLength, maxOf(0, layout.getLineEnd(layout.lineCount - 1)))
   }
 
   /**
@@ -191,12 +205,13 @@ class MarkdownAccessibilityHelper(
   private fun addAdmonitionHeaderItems(
     items: MutableList<AccessibilityItem>,
     spanned: Spanned,
+    endLimit: Int,
   ) {
     val layout = textView.layout ?: return
 
     for (header in spanned.getSpans(0, spanned.length, AdmonitionHeaderSpan::class.java)) {
       val start = spanned.getSpanStart(header)
-      if (start < 0) continue
+      if (start < 0 || start > endLimit) continue
       val line = layout.getLineForOffset(start)
 
       items.add(
@@ -438,8 +453,10 @@ class MarkdownAccessibilityHelper(
   private fun boundsForItem(item: AccessibilityItem): Rect {
     item.admonitionHeader?.let { return it.bounds }
     val layout = textView.layout ?: return Rect()
-    val vs = item.visibleStart
-    val ve = item.visibleEnd
+    if (layout.lineCount == 0) return Rect()
+    val maxOffset = layout.getLineEnd(layout.lineCount - 1)
+    val vs = item.visibleStart.coerceIn(0, maxOffset)
+    val ve = item.visibleEnd.coerceIn(vs, maxOffset)
 
     val startLine = layout.getLineForOffset(vs)
     val endLine = layout.getLineForOffset(maxOf(vs, ve - 1))

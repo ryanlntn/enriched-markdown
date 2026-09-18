@@ -139,18 +139,22 @@ class MarkdownAccessibilityHelper(
     if (spanned.isEmpty()) return emptyList()
 
     val text = spanned.toString()
+    val endLimit = visibleTextLength(text.length)
     val result = mutableListOf<AccessibilityItem>()
     var nextId = 0
     val semanticSpans = collectSemanticSpans(spanned)
 
     var paraStart = 0
-    while (paraStart < text.length) {
+    while (paraStart < endLimit) {
       val newlineIdx = text.indexOf('\n', paraStart)
-      val paraEnd = if (newlineIdx == -1) text.length else newlineIdx + 1
+      val paraEnd = minOf(if (newlineIdx == -1) text.length else newlineIdx + 1, endLimit)
       val trimmed = text.substring(paraStart, paraEnd).trim()
 
       if (trimmed.isNotEmpty()) {
-        val spansInParagraph = semanticSpans.filter { it.start < paraEnd && it.end > paraStart }
+        val spansInParagraph =
+          semanticSpans
+            .filter { it.start < paraEnd && it.end > paraStart }
+            .map { it.copy(end = minOf(it.end, endLimit)) }
 
         if (spansInParagraph.isEmpty()) {
           result.add(
@@ -163,7 +167,17 @@ class MarkdownAccessibilityHelper(
       paraStart = paraEnd
     }
 
-    return result.ifEmpty { listOf(AccessibilityItem(0, text.trim(), 0, spanned.length)) }
+    return result.ifEmpty {
+      val visibleText = text.substring(0, endLimit)
+      listOf(AccessibilityItem(0, visibleText.trim(), 0, endLimit))
+    }
+  }
+
+  /** End offset of the laid-out (visible) text; less than the full length when truncated. */
+  private fun visibleTextLength(fullLength: Int): Int {
+    val layout = textView.layout ?: return fullLength
+    if (layout.lineCount == 0) return fullLength
+    return minOf(fullLength, maxOf(0, layout.getLineEnd(layout.lineCount - 1)))
   }
 
   private fun collectSemanticSpans(spanned: Spanned): List<SpanRange> =
@@ -400,8 +414,10 @@ class MarkdownAccessibilityHelper(
 
   private fun boundsForItem(item: AccessibilityItem): Rect {
     val layout = textView.layout ?: return Rect()
-    val vs = item.visibleStart
-    val ve = item.visibleEnd
+    if (layout.lineCount == 0) return Rect()
+    val maxOffset = layout.getLineEnd(layout.lineCount - 1)
+    val vs = item.visibleStart.coerceIn(0, maxOffset)
+    val ve = item.visibleEnd.coerceIn(vs, maxOffset)
 
     val startLine = layout.getLineForOffset(vs)
     val endLine = layout.getLineForOffset(maxOf(vs, ve - 1))
