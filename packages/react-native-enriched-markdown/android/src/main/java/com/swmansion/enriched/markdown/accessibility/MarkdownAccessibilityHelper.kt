@@ -177,7 +177,14 @@ class MarkdownAccessibilityHelper(
   private fun visibleTextLength(fullLength: Int): Int {
     val layout = textView.layout ?: return fullLength
     if (layout.lineCount == 0) return fullLength
-    return minOf(fullLength, maxOf(0, layout.getLineEnd(layout.lineCount - 1)))
+    val lastLine = layout.lineCount - 1
+    val lineEnd =
+      if (layout.getEllipsisCount(lastLine) > 0) {
+        layout.getLineStart(lastLine) + layout.getEllipsisStart(lastLine)
+      } else {
+        layout.getLineEnd(lastLine)
+      }
+    return minOf(fullLength, maxOf(0, lineEnd))
   }
 
   private fun collectSemanticSpans(spanned: Spanned): List<SpanRange> =
