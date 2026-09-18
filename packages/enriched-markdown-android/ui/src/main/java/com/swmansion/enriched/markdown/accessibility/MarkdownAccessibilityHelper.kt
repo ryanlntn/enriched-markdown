@@ -2,6 +2,7 @@ package com.swmansion.enriched.markdown.accessibility
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.text.Layout
 import android.text.Spanned
 import android.view.View
 import android.view.ViewTreeObserver
@@ -189,18 +190,25 @@ class MarkdownAccessibilityHelper(
       .mapIndexed { index, item -> item.copy(id = index) }
   }
 
+  /** Last line that is visible; less than lineCount - 1 when height-capped (e.g. `clip`). */
+  private fun lastVisibleLineIndex(layout: Layout): Int {
+    val maxLines = textView.maxLines.coerceAtLeast(1)
+    return (minOf(layout.lineCount, maxLines) - 1).coerceIn(0, layout.lineCount - 1)
+  }
+
+  /** Ellipsis-aware end offset for a visible line. */
+  private fun visibleLineEnd(layout: Layout, line: Int): Int =
+    if (layout.getEllipsisCount(line) > 0) {
+      layout.getLineStart(line) + layout.getEllipsisStart(line)
+    } else {
+      layout.getLineEnd(line)
+    }
+
   /** End offset of the laid-out (visible) text; less than the full length when truncated. */
   private fun visibleTextLength(fullLength: Int): Int {
     val layout = textView.layout ?: return fullLength
     if (layout.lineCount == 0) return fullLength
-    val lastLine = layout.lineCount - 1
-    val lineEnd =
-      if (layout.getEllipsisCount(lastLine) > 0) {
-        layout.getLineStart(lastLine) + layout.getEllipsisStart(lastLine)
-      } else {
-        layout.getLineEnd(lastLine)
-      }
-    return minOf(fullLength, maxOf(0, lineEnd))
+    return minOf(fullLength, maxOf(0, visibleLineEnd(layout, lastVisibleLineIndex(layout))))
   }
 
   /**
@@ -462,7 +470,7 @@ class MarkdownAccessibilityHelper(
     item.admonitionHeader?.let { return it.bounds }
     val layout = textView.layout ?: return Rect()
     if (layout.lineCount == 0) return Rect()
-    val maxOffset = layout.getLineEnd(layout.lineCount - 1)
+    val maxOffset = visibleLineEnd(layout, lastVisibleLineIndex(layout))
     val vs = item.visibleStart.coerceIn(0, maxOffset)
     val ve = item.visibleEnd.coerceIn(vs, maxOffset)
 
