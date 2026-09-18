@@ -211,7 +211,7 @@ class MarkdownAccessibilityHelper(
 
     for (header in spanned.getSpans(0, spanned.length, AdmonitionHeaderSpan::class.java)) {
       val start = spanned.getSpanStart(header)
-      if (start < 0 || start > endLimit) continue
+      if (start < 0 || start >= endLimit) continue
       val line = layout.getLineForOffset(start)
 
       items.add(
